@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oficio Ya</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="phone" class="phone-container theme-default">
+
+        <!-- PANTALLA 1: SPLASH BIENVENIDA (Triángulo cambiado por Casco) -->
+        <div id="screen-welcome" class="screen active">
+            <div class="header">
+                <!-- Aquí se cambió el símbolo ▲ por el casco de constructor -->
+          <img class="logo-casco" src="oficios-ya.png" alt="Casco de Constructor">
+                <h2>Oficio Ya</h2>
+                <p class="subtitle">Nuevas habilidades, grandes oportunidades.</p>
+            </div>
+            <div class="content">
+                <button class="btn-green" onclick="nextScreen('screen-role')">Empezar</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 2: INICIO DE SESIÓN / SELECCIÓN DE ROL -->
+        <div id="screen-role" class="screen">
+            <div class="header">
+                <h2>Inicio de Sesión</h2>
+                <p>Bienvenido, selecciona una de las opciones para ingresar</p>
+            </div>
+            <div class="content role-options">
+                <button class="btn-role-select azul" onclick="selectRole('emprendedor')">
+                    <span class="avatar-circle">👤</span>
+                    Como Emprendedor
+                </button>
+                <button class="btn-role-select blanco-negro" onclick="selectRole('cliente')">
+                    <span class="avatar-circle">👥</span>
+                    Como Cliente
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 3-E: VENTAJAS Y LOGIN EMPRENDEDOR -->
+        <div id="screen-login-emprendedor" class="screen">
+            <div class="header">
+                <h2>Ventajas Emprendedor</h2>
+            </div>
+            <div class="content">
+                <div class="advantages-box">
+                    <p>• Estabilidad laboral las 24 horas del día.</p>
+                    <p>• Comisión de tan solo el 5% de tus ganancias.</p>
+                    <p>• Acceso a herramientas de gestión gratuitas.</p>
+                </div>
+                <hr class="divider">
+                <div class="login-form">
+                    <h3>Ingresa tus datos</h3>
+                    <div class="input-group"><label>Nombre</label><input type="text" placeholder="Ej. Anthony Guzman"></div>
+                    <div class="input-group"><label>Correo Electrónico</label><input type="email" placeholder="ejemplo@correo.com"></div>
+                    <div class="input-group"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+                    <div class="input-group"><label>Número de celular</label><input type="tel" placeholder="999 999 999"></div>
+                </div>
+            </div>
+            <button class="btn-green" onclick="nextScreen('screen-home-emprendedor')">Siguiente</button>
+        </div>
+
+        <!-- PANTALLA 3-C: VENTAJAS Y LOGIN CLIENTE -->
+        <div id="screen-login-cliente" class="screen">
+            <div class="header">
+                <h2>Ventajas Cliente</h2>
+            </div>
+            <div class="content">
+                <div class="advantages-box">
+                    <p>• Encuentra personal calificado en minutos.</p>
+                    <p>• Precios transparentes y sin cobros ocultos.</p>
+                    <p>• Seguridad garantizada en tu hogar.</p>
+                </div>
+                <hr class="divider">
+                <div class="login-form">
+                    <h3>Ingresa tus datos</h3>
+                    <div class="input-group"><label>Nombre Completo</label><input type="text" placeholder="Tu nombre"></div>
+                    <div class="input-group"><label>Correo Electrónico</label><input type="email" placeholder="ejemplo@correo.com"></div>
+                    <div class="input-group"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+                    <div class="input-group"><label>N° de Tarjeta o Cuenta</label><input type="text" placeholder="0000 0000 0000 0000"></div>
+                </div>
+            </div>
+            <button class="btn-green" onclick="nextScreen('screen-home-cliente')">Siguiente</button>
+        </div>
+
+        <!-- PANTALLA INICIO EMPRENDEDOR -->
+        <div id="screen-home-emprendedor" class="screen screen-with-nav">
+            <div class="header">
+                <h2>Inicio Emprendedor</h2>
+                <div class="search-box">
+                    <input type="text" id="emp-search" onkeyup="filterServices('emp')" placeholder="Buscar negocios y servicios...">
+                </div>
+            </div>
+            <div class="content content-scroll">
+                <h3>Mis Servicios Publicados</h3>
+                <div id="my-businesses-list" class="dynamic-list">
+                    <p class="info-text">No tienes negocios registrados aún. Presiona (+) para añadir el tuyo.</p>
+                </div>
+                
+                <h3 style="margin-top: 15px;">Explorar Mercado de Oficios</h3>
+                <div id="emp-market-list" class="dynamic-list"></div>
+            </div>
+            <button class="btn-add-floating" onclick="nextScreen('screen-create-business')">+</button>
+        </div>
+
+        <!-- PANTALLA INICIO CLIENTE -->
+        <div id="screen-home-cliente" class="screen screen-with-nav">
+            <div class="header">
+                <h2>Buscar Servicio</h2>
+                <div class="search-box">
+                    <input type="text" id="client-search" onkeyup="filterServices('client')" placeholder="Buscar por categoría o nombre...">
+                </div>
+            </div>
+            <div id="client-market-list" class="content content-scroll dynamic-list"></div>
+        </div>
+
+        <!-- PANTALLA 8: REGISTRAR UN NUEVO NEGOCIO -->
+        <div id="screen-create-business" class="screen">
+            <div class="header">
+                <h2>Registrar Negocio</h2>
+                <p>Configura tu perfil de servicio público</p>
+            </div>
+            <div class="content">
+                <div class="input-group"><label>Categoría</label><input type="text" id="biz-category" placeholder="Ej. Gasfitería, Albañilería, Electricidad"></div>
+                <div class="input-group"><label>Nombre de la Entidad o Servicio</label><input type="text" id="biz-name" placeholder="Ej. Anthony Servicios"></div>
+                <div class="input-group"><label>Descripción del servicio</label><textarea id="biz-desc" rows="3" placeholder="Detalla lo que ofreces..."></textarea></div>
+            </div>
+            <button class="btn-green" onclick="saveNewBusiness()">Finalizar</button>
+        </div>
+
+        <!-- PANTALLA 14: FORMULARIO COMPARTIDO DE PEDIDO -->
+        <div id="screen-shared-action" class="screen screen-with-nav">
+            <div class="header">
+                <h2>Detalles del Pedido</h2>
+                <p>Confirma los datos para enviar la orden</p>
+            </div>
+            <div class="content">
+                <div class="input-group">
+                    <label>Servicio Solicitado</label>
+                    <input type="text" id="order-service-name" readonly>
+                </div>
+                <div class="input-group">
+                    <label>Especificaciones / Detalles</label>
+                    <textarea rows="3" placeholder="Escribe las especificaciones aquí..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Fecha y Lugar</label>
+                    <input type="text" placeholder="Ej. Mañana en Av. Principal 123, 3:00 PM">
+                </div>
+            </div>
+            <button class="btn-green" onclick="nextScreen('screen-success')">Siguiente</button>
+        </div>
+
+        <!-- PANTALLA 15: ÉXITO FINAL -->
+        <div id="screen-success" class="screen screen-with-nav">
+            <div class="header">
+                <h2>¡Listo!</h2>
+            </div>
+            <div class="content success-box">
+                <div class="success-icon">✓</div>
+                <p class="success-msg">su pedido a sido enviado correctamente</p>
+            </div>
+            <div class="success-actions">
+                <button class="btn-green" onclick="goHome()">Ir al Inicio</button>
+                <button class="btn-outline-exit" onclick="restartApp()">Cerrar / Salir</button>
+            </div>
+        </div>
+
+        <!-- BARRA DE NAVEGACIÓN INFERIOR -->
+        <div id="bottom-nav" class="bottom-nav">
+            <div class="nav-item" onclick="goHome()">🏠<span class="nav-text">Inicio</span></div>
+            <div class="nav-item">💬<span class="nav-text">Chat</span></div>
+            <div id="nav-profile-icon" class="nav-item profile-icon">👤<span class="nav-text">Perfil</span></div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
